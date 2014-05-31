@@ -163,6 +163,7 @@ hs_object_connection(hs_obj_t *obj)
     if (obj->persistent) {
         hashkey = Z_STRVAL_P(obj->persistent);
     }
+    TSRMLS_FETCH();
 
     obj->stream = php_stream_xport_create(Z_STRVAL_P(obj->server),
                                           Z_STRLEN_P(obj->server),
@@ -271,6 +272,7 @@ PHP_HANDLERSOCKETI_API php_stream
 *handlersocketi_object_store_get_stream(zval *link)
 {
     hs_obj_t *hs;
+    TSRMLS_FETCH();
 
     hs = (hs_obj_t *)zend_object_store_get_object(link TSRMLS_CC);
     if (hs) {
@@ -284,7 +286,7 @@ PHP_HANDLERSOCKETI_API long
 handlersocketi_object_store_get_timeout(zval *link)
 {
     hs_obj_t *hs;
-
+    TSRMLS_FETCH();
     hs = (hs_obj_t *)zend_object_store_get_object(link TSRMLS_CC);
     if (hs) {
         return hs->timeout;
