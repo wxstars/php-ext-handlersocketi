@@ -318,6 +318,7 @@ static inline zval
         HashTable *ht;
         HashPosition pos;
 
+	TSRMLS_FETCH();
         ht = HASH_OF(val);
         if (zend_hash_num_elements(ht) >= 0) {
             zend_hash_internal_pointer_reset_ex(ht, &pos);
@@ -1120,9 +1121,10 @@ ZEND_METHOD(HandlerSocketi_Index, find)
     /* options */
     if (options != NULL && Z_TYPE_P(options) == IS_ARRAY) {
         /* limit */
-        limit = hs_get_options_long(HASH_OF(options), "limit", limit);
+	TSRMLS_FETCH();
+        limit = hs_get_options_long(HASH_OF(options), "limit", limit TSRMLS_CC);
         /* offset */
-        offset = hs_get_options_long(HASH_OF(options), "offset", offset);
+        offset = hs_get_options_long(HASH_OF(options), "offset", offset TSRMLS_CC);
         /* safe */
         safe = hs_is_options_safe(HASH_OF(options) TSRMLS_CC);
         /* in, fiter, while */
@@ -1300,9 +1302,10 @@ ZEND_METHOD(HandlerSocketi_Index, update)
 
     if (options != NULL && Z_TYPE_P(options) == IS_ARRAY) {
         /* limit */
-        limit = hs_get_options_long(HASH_OF(options), "limit", limit);
+	TSRMLS_FETCH();
+        limit = hs_get_options_long(HASH_OF(options), "limit", limit TSRMLS_CC);
         /* offset */
-        offset = hs_get_options_long(HASH_OF(options), "offset", offset);
+        offset = hs_get_options_long(HASH_OF(options), "offset", offset TSRMLS_CC);
         /* safe */
         safe = hs_is_options_safe(HASH_OF(options) TSRMLS_CC);
         /* in, fiter, while */
@@ -1413,9 +1416,10 @@ ZEND_METHOD(HandlerSocketi_Index, remove)
 
     if (options != NULL && Z_TYPE_P(options) == IS_ARRAY) {
         /* limit */
-        limit = hs_get_options_long(HASH_OF(options), "limit", limit);
+	TSRMLS_FETCH();
+        limit = hs_get_options_long(HASH_OF(options), "limit", limit TSRMLS_CC);
         /* offset */
-        offset = hs_get_options_long(HASH_OF(options), "offset", offset);
+        offset = hs_get_options_long(HASH_OF(options), "offset", offset TSRMLS_CC);
         /* safe */
         safe = hs_is_options_safe(HASH_OF(options) TSRMLS_CC);
         /* in, fiter, while */
@@ -1539,10 +1543,11 @@ ZEND_METHOD(HandlerSocketi_Index, multi)
             /* 2: options */
             if (zend_hash_index_find(ht, 2, (void **)&options) == SUCCESS &&
                 options != NULL && Z_TYPE_PP(options) == IS_ARRAY) {
+	TSRMLS_FETCH();
                 limit = hs_get_options_long(HASH_OF(*options),
-                                            "limit", limit);
+                                            "limit", limit TSRMLS_CC);
                 offset = hs_get_options_long(HASH_OF(*options),
-                                             "offset", offset);
+                                             "offset", offset TSRMLS_CC);
                 hs_array_to_in_filter(HASH_OF(*options), hsi->filter,
                                       &filters, &in_key, &in_values TSRMLS_CC);
             }
@@ -1680,16 +1685,18 @@ ZEND_METHOD(HandlerSocketi_Index, multi)
             /* 2: options */
             if (zend_hash_index_find(ht, 2, (void **)&options) == SUCCESS &&
                 options != NULL && Z_TYPE_PP(options) == IS_ARRAY) {
+	        TSRMLS_FETCH();
                 limit = hs_get_options_long(HASH_OF(*options),
-                                            "limit", limit);
+                                            "limit", limit TSRMLS_CC);
                 offset = hs_get_options_long(HASH_OF(*options),
-                                             "offset", offset);
+                                             "offset", offset TSRMLS_CC);
                 hs_array_to_in_filter(HASH_OF(*options), hsi->filter,
                                       &filters, &in_key, &in_values TSRMLS_CC);
             }
 
             /* operete : criteria */
             MAKE_STD_ZVAL(operate);
+	    TSRMLS_FETCH();
             if (hs_zval_to_operate_criteria(*query, operate, &criteria,
                                             HS_FIND_EQUAL TSRMLS_CC)
                 != SUCCESS) {
@@ -1748,10 +1755,11 @@ ZEND_METHOD(HandlerSocketi_Index, multi)
             /* 3: options */
             if (zend_hash_index_find(ht, 3, (void **)&options) == SUCCESS &&
                 options != NULL && Z_TYPE_PP(options) == IS_ARRAY) {
+	        TSRMLS_FETCH();
                 limit = hs_get_options_long(HASH_OF(*options),
-                                            "limit", limit);
+                                            "limit", limit TSRMLS_CC);
                 offset = hs_get_options_long(HASH_OF(*options),
-                                             "offset", offset);
+                                             "offset", offset TSRMLS_CC);
                 hs_array_to_in_filter(HASH_OF(*options), hsi->filter,
                                       &filters, &in_key, &in_values TSRMLS_CC);
             }
